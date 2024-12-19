@@ -1,67 +1,14 @@
-import {auth} from './api/auth';
-import {user} from './api/user';
-import {accessibility} from './api/accessibility';
-import {discounts} from './api/cart/discounts';
-import {cart} from './api/cart';
-import {referrals} from './api/referrals';
-import {categories} from './api/categories';
-import {productsForAuthorized} from './api/products/authorized';
-import {productsForGuest} from './api/products/guest';
-import {announcements} from './api/cms/announcements';
-import {pages} from './api/cms/pages';
-import {profile} from './api/cms/profile';
-import {settings} from './api/cms/staff';
-import {payment} from './api/payment';
-
-async function testing() {
-    await auth.login('classic', 'sxagondev').then((r) => console.log("login", r));
-    await auth.isLoggedIn().then((r) => console.log("isLoggedIn", r));
-    //await auth.logout().then((r) => console.log(r));
-    await user.getUser().then((r) => console.log("getUser", r));
-    await accessibility.check().then((r) => console.log("checkAccessibility", r));
-    await discounts.check('giftcard', '123456789').then((r) => console.log("giftcard check", r));
-    await discounts.check('coupon').then((r) => console.log("coupon check", r));
-    await discounts.apply('123456789').then((r) => console.log("apply giftcard", r));
-    await discounts.remove('giftcard').then((r) => console.log("remove giftcard", r));
-    await discounts.remove('coupon').then((r) => console.log("remove coupon", r));
-    await cart.getCart().then((r) => console.log("getCart", r));
-    await cart.addPackage('1', true, true).then((r) => console.log("addPackage", r));
-    await cart.variablePackage('1', 1, 'test').then((r) => console.log("variablePackage", r));
-    await cart.selectServerPackage('1', 8).then((r) => console.log("selectServerPackage", r));
-    await cart.removePackage('1').then((r) => console.log("removePackage", r));
-    await cart.quantityPackage('1', 2).then((r) => console.log("quantityPackage", r));
-    await cart.pricePackage('1', 100).then((r) => console.log("pricePackage", r));
-    await cart.getSelectableServers().then((r) => console.log("getSelectableServers", r));
-    await referrals.apply('123456789').then((r) => console.log("apply referral", r));
-    await referrals.remove().then((r) => console.log("remove referral", r));
-    await categories.get().then((r) => console.log("get categories", r));
-    await productsForAuthorized.get('1').then((r) => console.log("get product", r));
-    await productsForAuthorized.getFromCategory('prison-ranks').then((r) => console.log("get products from category", r));
-    await productsForAuthorized.getFeatured().then((r) => console.log("get featured products", r));
-    await productsForGuest.get('1').then((r) => console.log("get guest product", r));
-    await announcements.get().then((r) => console.log("get announcements", r));
-    await pages.get('prison-ranks').then((r) => console.log("get page", r));
-    await profile.get('sxago').then((r) => console.log("get profile", r));
-    await settings.get().then((r) => console.log("get settings", r));
-    await payment.getMethods().then((r) => console.log("get payment methods", r));
-
-    const paymentData = {
-        'details': {
-            'fullname': 'Michal Lipka',
-            'email': 'contact@sxagon.eu',
-            'address1': 'test',
-            'address2': 'test',
-            'city': 'test',
-            'region': 'Praha',
-            'country': 'Czech Republic',
-            'zipcode': '11000',
-        },
-        'termsAndConditions': true,
-        'privacyPolicy': true,
-        'paymentMethod': 'stripe',
-        'currency': 'CZK',
-    }
-    await payment.create(paymentData).then((r) => console.log("create payment", r));
-}
-
-testing();
+export { auth } from './api/auth';
+export { user } from './api/user';
+export { accessibility } from './api/accessibility';
+export { discounts } from './api/cart/discounts';
+export { cart } from './api/cart';
+export { referrals } from './api/referrals';
+export { categories } from './api/categories';
+export { productsForAuthorized } from './api/products/authorized';
+export { productsForGuest } from './api/products/guest';
+export { announcements } from './api/cms/announcements';
+export { pages } from './api/cms/pages';
+export { profile } from './api/cms/profile';
+export { settings } from './api/cms/staff';
+export { payment } from './api/payment';
