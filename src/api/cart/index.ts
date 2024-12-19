@@ -15,6 +15,19 @@ export const cart = {
                 throw e;
             });
     },
+    async isCartEmpty() {
+        if (!cookies.get('mscms_auth_token')) {
+            return errors['401'];
+        }
+        return request('POST', '/cart/get', {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+            .then((response: any) => {
+                return response.items.length === 0;
+
+            })
+            .catch((e: any) => {
+                throw e;
+            });
+    },
     async addPackage(id: string, promoted: boolean, payment_type: boolean) {
         return packages.add(id, promoted, payment_type);
     },
