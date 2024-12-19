@@ -1,0 +1,34 @@
+{
+  "name": "@sxaagon/mscms2-api",
+  "version": "1.0.0",
+  "author": "Sxagon",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "description": "MineStoreCMS API package",
+  "keywords": [
+    "minestore",
+    "cms",
+    "minecraft",
+    "api",
+    "mscms",
+    "typescript"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon src/index.ts"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "nodemon": "^3.1.9",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@types/dotenv": "^8.2.3",
+    "axios": "^1.7.9",
+    "dotenv": "^16.4.7",
+    "universal-cookie": "^7.2.2"
+  }
+}
