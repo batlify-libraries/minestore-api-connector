@@ -1,13 +1,20 @@
-import {request} from '../../../core/Instance';
+import Context from '../../../core/context';
 
-export const pages = {
+export default class Pages extends Context {
+
+    /*
+     * Get pages
+     * @Note Authorization isn't needed
+     * @returns response
+     * @throws Error
+     */
     async get(path: string) {
-        return request('POST', '/pages/get', {url: path})
+        return this.request(false, 'POST', '/pages/get', {url: path})
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
 }

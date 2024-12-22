@@ -1,41 +1,54 @@
-import {request, cookies} from '../../../core/Instance';
-import {errors} from '../../../core/errors';
+import Context from '../../../core/context';
 
-export const productsForAuthorized = {
+export default class ProductsAuthorized extends Context {
+
+    /*
+     * Get product by id
+     * @Note Authorization is needed
+     * @param id Product id
+     * @returns response
+     * @throws Error
+     */
     async get(id: string) {
-        if (!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', `/items/get/${id}`, {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', `/items/get/${id}`)
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
+
+    /*
+     * Get products by category
+     * @Note Authorization is needed
+     * @param path Category path
+     * @returns response
+     * @throws Error
+     */
     async getFromCategory(path: string) {
-        if (!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', `/categories/get/${path}`, {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', `/categories/get/${path}`)
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
+
+    /*
+     * Get featured products
+     * @Note Authorization is needed
+     * @returns response
+     * @throws Error
+     */
     async getFeatured() {
-        if (!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', `/items/getFeaturedDeals `, {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', `/items/getFeaturedDeals `)
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
 }

@@ -1,41 +1,64 @@
-import {cookies, request} from '../../../core/Instance';
-import {errors} from '../../../core/errors';
-import {giftCard} from './giftcards';
-import {coupons} from './coupons';
+import Context from '../../../core/context';
+import GiftCards from './giftcards';
+import Coupons from './coupons';
 
-export const discounts = {
+export default class Discounts extends Context {
+
+    protected giftCards: GiftCards;
+    protected coupons: Coupons;
+
+    constructor() {
+        super();
+        this.giftCards = new GiftCards();
+        this.coupons = new Coupons();
+    }
+
+    /*
+     * Check discount
+     * @param type giftcard | coupon
+     * @param code giftcard/coupon code
+     * @throws Error
+     */
     async check(type: 'giftcard' | 'coupon', code?: string) {
         if (type === 'giftcard') {
             if (!code) {
                 throw new Error('Code is required');
             }
-            return giftCard.check(code);
+            return this.giftCards.check(code);
         }
         if (type === 'coupon') {
-            // @TODO: ask Markus
             // why tf can't I check specific coupon code and coupon must be applied?
             // don't ask me why... it's just how it works ¯\_(ツ)_/¯
-            return coupons.check();
+            return this.coupons.check();
         }
-    },
+    }
+
+    /*
+     * Apply discount
+     * @param code coupon code
+     * @throws Error
+     */
     async apply(code: string) {
-        if (!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', '/cart/acceptCoupon', {coupon: code}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', '/cart/acceptCoupon', {coupon: code})
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
+
+    /*
+      * Remove discount
+      * @param type giftcard | coupon
+      * @throws Error
+     */
     async remove(type: 'giftcard' | 'coupon') {
         if (type === 'giftcard') {
-            return giftCard.remove();
+            return this.giftCards.remove();
         }
         if (type === 'coupon') {
-            return coupons.remove();
+            return this.coupons.remove();
         }
-    },
+    }
 }

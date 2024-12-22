@@ -1,13 +1,20 @@
-import {request} from '../../../core/Instance';
+import Context from '../../../core/context';
 
-export const settings = {
+export default class Settings extends Context {
+
+    /*
+     * Get webstore settings
+     * @Note Authorization isn't needed
+     * @returns response
+     * @throws Error
+     */
     async get() {
-        return request('GET', '/settings')
+        return this.request(false, 'GET', '/settings')
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
 }

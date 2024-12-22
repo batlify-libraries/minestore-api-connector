@@ -1,13 +1,20 @@
-import {request} from '../../core/Instance';
+import Context from '../../core/context';
 
-export const categories = {
+export default class Categories extends Context {
+
+    /*
+     * Get categories
+     * @Note Authorization isn't needed
+     * @returns response
+     * @throws Error
+     */
     async get() {
-        return request('GET', '/categories/get')
+        return this.request(false, 'GET', '/categories/get')
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
 }

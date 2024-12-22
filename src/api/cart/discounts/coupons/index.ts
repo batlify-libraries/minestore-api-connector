@@ -1,24 +1,19 @@
-import {request, cookies} from '../../../../core/Instance';
-import {errors} from '../../../../core/errors';
+import Context from '../../../../core/context';
 
-export const coupons = {
+export default class Coupons extends Context {
+
     async check() {
-        if(!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', '/cart/getCoupon', {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', '/cart/getCoupon')
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
+
     async remove() {
-        if (!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', '/cart/removeCoupon', {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', '/cart/removeCoupon')
             .then((response: any) => {
                 return response;
             })

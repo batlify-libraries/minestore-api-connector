@@ -1,25 +1,39 @@
-import {request, cookies} from '../../core/Instance';
-import {errors} from '../../core/errors';
-import {packages} from './packages';
+import Context from '../../core/context';
+import Packages from './packages';
 
-export const cart = {
+export default class Cart extends Context {
+
+    protected packages: Packages;
+
+    constructor() {
+        super();
+        this.packages = new Packages();
+    }
+
+    /*
+     * Get cart's data
+     * @Note Authorization is needed
+     * @param response
+     * @throws Error
+     */
     async getCart() {
-        if (!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', '/cart/get', {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', '/cart/get')
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
+
+    /*
+     * Check if cart is empty
+     * @Note Authorization is needed
+     * @param response
+     * @throws Error
+     */
     async isCartEmpty() {
-        if (!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', '/cart/get', {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', '/cart/get')
             .then((response: any) => {
                 return response.items.length === 0;
 
@@ -27,35 +41,81 @@ export const cart = {
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
+
+    /*
+     * Add package to cart
+     * @Note Authorization is needed
+     * @param response
+     * @throws Error
+     */
     async addPackage(id: string, promoted: boolean, payment_type: boolean) {
-        return packages.add(id, promoted, payment_type);
-    },
+        return this.packages.add(id, promoted, payment_type);
+    }
+
+    /*
+     * Remove package from cart
+     * @Note Authorization is needed
+     * @param response
+     * @throws Error
+     */
     async removePackage(id: string) {
-        return packages.remove(id);
-    },
+        return this.packages.remove(id);
+    }
+
+    /*
+     * Update package's quantity in cart
+     * @Note Authorization is needed
+     * @param response
+     * @throws Error
+     */
     async quantityPackage(id: string, quantity: number) {
-        return packages.quantity(id, quantity);
-    },
+        return this.packages.quantity(id, quantity);
+    }
+
+    /*
+     * Update package's price in cart
+     * @Note Authorization is needed
+     * @param response
+     * @throws Error
+     */
     async pricePackage(id: string, price: number) {
-        return packages.price(id, price);
-    },
+        return this.packages.price(id, price);
+    }
+
+    /*
+     * Update package's variable in cart
+     * @Note Authorization is needed
+     * @param response
+     * @throws Error
+     */
     async variablePackage(id: string, variable: number, value: string) {
-        return packages.variable(id, variable, value);
-    },
+        return this.packages.variable(id, variable, value);
+    }
+
+    /*
+     * Update package's variable in cart
+     * @Note Authorization is needed
+     * @param response
+     * @throws Error
+     */
     async selectServerPackage(id: string, server: number) {
-        return packages.selectServer(id, server);
-    },
+        return this.packages.selectServer(id, server);
+    }
+
+    /*
+     * Get selectable servers
+     * @Note Authorization is needed
+     * @param response
+     * @throws Error
+     */
     async getSelectableServers() {
-        if (!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', '/cart/getSelectServers', {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', '/cart/getSelectServers')
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
 }

@@ -1,17 +1,19 @@
-import {request, cookies} from '../../core/Instance';
-import {errors} from '../../core/errors';
+import Context from '../../core/context';
 
-export const user = {
+export default class User extends Context {
+
+    /*
+     * Get user's data
+     * @Note Authorization is needed
+     * @throws Error
+     */
     async getUser() {
-        if(!cookies.get('mscms_auth_token')) {
-            return errors['401'];
-        }
-        return request('POST', '/user', {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', '/user')
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
 }

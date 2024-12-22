@@ -1,15 +1,15 @@
 import Context from '../../../core/context';
 
-export default class Profile extends Context {
+export default class Announcement extends Context {
 
     /*
-     * Get profile
+     * Get announcement
      * @Note Authorization isn't needed
      * @returns response
      * @throws Error
      */
-    async get(username: string) {
-        return this.request(false, 'GET', `/profile/${username}`)
+    async get() {
+        return this.request(false, 'GET', '/announcement/get')
             .then((response: any) => {
                 return response;
             })

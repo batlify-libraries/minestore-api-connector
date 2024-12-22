@@ -1,14 +1,33 @@
-export { auth } from './api/auth';
-export { user } from './api/user';
-export { accessibility } from './api/accessibility';
-export { discounts } from './api/cart/discounts';
-export { cart } from './api/cart';
-export { referrals } from './api/referrals';
-export { categories } from './api/categories';
-export { productsForAuthorized } from './api/products/authorized';
-export { productsForGuest } from './api/products/guest';
-export { announcements } from './api/cms/announcements';
-export { pages } from './api/cms/pages';
-export { profile } from './api/cms/profile';
-export { settings } from './api/cms/staff';
-export { payment } from './api/payment';
+import Auth from './api/auth';
+import User from './api/user';
+import Accessibility from './api/accessibility';
+import Discounts from './api/cart/discounts';
+import Cart from './api/cart';
+import Referrals from './api/referrals';
+import Categories from './api/categories';
+import ProductsAuthorized from './api/products/authorized';
+import ProductsForGuest from './api/products/guest';
+import Announcement from './api/cms/announcement';
+import Pages from './api/cms/pages';
+import Profile from './api/cms/profile';
+import Staff from './api/cms/staff';
+import Settings from './api/cms/settings';
+import Payment from './api/payment';
+
+export {
+    Auth,
+    User,
+    Accessibility,
+    Discounts,
+    Cart,
+    Referrals,
+    Categories,
+    ProductsAuthorized,
+    ProductsForGuest,
+    Announcement,
+    Pages,
+    Profile,
+    Staff,
+    Settings,
+    Payment,
+};

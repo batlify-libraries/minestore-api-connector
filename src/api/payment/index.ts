@@ -1,28 +1,37 @@
-import {request, cookies} from '../../core/Instance';
+import Context from '../../core/context';
 
-export const payment = {
+export default class Payment extends Context {
+
+    /*
+     * Get payment methods
+     * @Note Authorization is needed
+     * @returns response
+     * @throws Error
+     */
     async getMethods() {
-        if (!cookies.get('mscms_auth_token')) {
-            return;
-        }
-        return request('POST', '/payments/get', {}, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', '/payments/get')
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
+
+    /*
+     * Create payment
+     * @Note Authorization is needed
+     * @param data Payment data
+     * @returns response
+     * @throws Error
+     */
     async create(data: any) {
-        if (!cookies.get('mscms_auth_token')) {
-            return;
-        }
-        return request('POST', '/payments/create', data, {'Authorization': 'Bearer ' + cookies.get('mscms_auth_token')})
+        return this.request(true, 'POST', '/payments/create', data)
             .then((response: any) => {
                 return response;
             })
             .catch((e: any) => {
                 throw e;
             });
-    },
+    }
 }
