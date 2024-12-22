@@ -13,6 +13,7 @@ import Profile from './api/cms/profile';
 import Staff from './api/cms/staff';
 import Settings from './api/cms/settings';
 import Payment from './api/payment';
+import Context from './core/context';
 
 export {
     Auth,
@@ -30,4 +31,5 @@ export {
     Staff,
     Settings,
     Payment,
+    Context,
 };

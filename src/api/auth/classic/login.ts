@@ -23,8 +23,8 @@ export default class AuthClassic extends Context {
             }
 
             return { status: 'failed' };
-        } catch (error) {
-            throw error;
+        } catch (e) {
+            throw e;
         }
     }
 }
