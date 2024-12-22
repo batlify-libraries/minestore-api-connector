@@ -11,8 +11,8 @@ export default class Context {
     /*
       * Send request to your MineStoreCMS instance
       * @param authorize If it's true, uses Authorization header with token
-      * @param method HTTP method
-      * @param url API endpoint
+      * @param method HTTP method (GET, POST, PUT, DELETE, PATCH)
+      * @param url API endpoint (will be appended to apiUrl [https://store.domain.com/api/:your-endpoint])
       * @param body Request body
       * @returns Response data
       * @throws Error (e.g. 401 Unauthorized)
