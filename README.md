@@ -5,55 +5,76 @@
 npm:
 
 ```bash
-npm install mscms2-api
+npm install @batlify/mscms2-api
 ```
 
 yarn:
 
 ```bash
-yarn add mscms2-api
+yarn add @batlify/mscms2-api
 ```
 
 pnpm:
 
 ```bash
-pnpm add mscms2-api
+pnpm add @batlify/mscms2-api
 ```
 
 ## Example of usage
 
 ```js
-import { Auth, User } from 'mscms2-api';
+import { Auth, User } from '@batlify/mscms2-api';
 
-export default class Test {
-    
+class Test {
     protected auth: Auth;
     protected user: User;
-    
+
     constructor() {
         this.auth = new Auth();
         this.user = new User();
-        
     }
 
-    async login(username: string) {
-        const response = await this.auth.login(username);
-        console.log(response);
+    async login(type: string, username: string) {
+        try {
+            const r = await this.auth.login(type, username);
+            return r;
+        } catch (error) {
+            throw error;
+        }
     }
 
-    async getUser() {
-        const response = await this.user.get();
-        console.log(response);
+    async fetchUser() {
+        try {
+            const userData = await this.user.get();
+            return userData;
+        } catch (error) {
+            throw error;
+        }
     }
 }
 
 const test = new Test();
 
-test.login('sxagondev').then(() => {
-    test.getUser().then((r) => {
-        console.log(r); // Magic!
-    });
-});
+(async () => {
+    try {
+        await test.login('classic', 'sxagondev')
+            .then((r) => {
+                if (r.status === 'success') {
+                    console.log('Login successful');
+                    test.fetchUser()
+                        .then((r) => {
+                            console.log('Fetched user data:', r);
+                        })
+                } else if (r.status === 'banned') {
+                    console.log('You are banned from this store');
+                } else {
+                    console.log('An error occurred:', r);
+                }
+            });
+    } catch (e) {
+        console.error('An error occurred:', e);
+    }
+})();
 ```
 
 ## IMPORTANT
@@ -66,4 +87,4 @@ work for you. All you have to do is design and develop the frontend design.
 
 ## License
 
-MIT © [Michal "Sxagon" Lipka](https://github.com/sxagon/mscms2-api)
+MIT © [Michal "Sxagon" Lipka](https://github.com/orgs/batlify/people/Sxagon)
