@@ -3,7 +3,7 @@ import Packages from './packages';
 
 export default class Cart extends Context {
 
-    protected packages: Packages;
+    private packages: Packages;
 
     constructor() {
         super();

@@ -5,6 +5,7 @@ import Cookies from 'universal-cookie';
 dotenv.config();
 
 export default class Context {
+
     protected cookies = new Cookies();
     private readonly apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
 
