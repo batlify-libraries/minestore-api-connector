@@ -1,18 +1,29 @@
 {
-  "name": "@sxaagon/mscms2-api",
+  "name": "@batlify/mscms2-api",
   "version": "1.0.0",
   "author": "Sxagon",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
-  "description": "MineStoreCMS API package",
+  "description": "MineStoreCMS v3 API package",
   "keywords": [
     "minestore",
     "cms",
     "minecraft",
     "api",
     "mscms",
-    "typescript"
+    "typescript",
+    "batlify",
+    "oop",
+    "ts",
+    "oop-ts",
+    "node",
+    "nodejs",
+    "npm",
+    "package",
+    "ts-package",
+    "package",
+    "minestorecms"
   ],
   "scripts": {
     "build": "tsc",
