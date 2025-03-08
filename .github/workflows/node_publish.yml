@@ -1,0 +1,53 @@
+name: Node.js Package
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm ci
+      - run: npm run build
+
+      - name: Check for dist folder
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Error: dist folder not found."
+            exit 1
+          fi
+
+  publish-npm:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://registry.npmjs.org/
+
+      - run: npm install
+      - run: npm run build
+      - name: Create .npmignore
+        run: |
+          echo './src/' > .npmignore
+          echo 'package-lock.json' >> .npmignore
+      - run: rm -rf src
+      - run: rm -rf .github
+      - run: rm -rf tsconfig.json
+      - run: cp package.json dist/
+      - run: cp README.md dist/
+      - run: cd dist && npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
