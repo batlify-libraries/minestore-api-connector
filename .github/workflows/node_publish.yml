@@ -13,7 +13,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
       - run: npm ci
       - run: npm run build
 
@@ -37,17 +36,20 @@ jobs:
           node-version: 20
           registry-url: https://registry.npmjs.org/
 
-      - run: npm install
+      - run: npm ci
       - run: npm run build
+
       - name: Create .npmignore
         run: |
           echo './src/' > .npmignore
           echo 'package-lock.json' >> .npmignore
-      - run: rm -rf src
-      - run: rm -rf .github
-      - run: rm -rf tsconfig.json
-      - run: cp package.json dist/
-      - run: cp README.md dist/
-      - run: cd dist && npm publish
+      - run: rm -rf src .github tsconfig.json
+      - run: cp package.json README.md dist/
+
+      - name: Verify package.json in dist
+        run: cat dist/package.json
+
+      - name: Publish to npm
+        run: cd dist && npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
