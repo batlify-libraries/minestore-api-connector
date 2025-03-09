@@ -9,7 +9,7 @@ export default class Settings extends Context {
      * @throws Error
      */
     async get() {
-        return this.request(false, 'GET', '/settings')
+        return this.request(false, 'GET', '/settings/get')
             .then((response: any) => {
                 return response;
             })
