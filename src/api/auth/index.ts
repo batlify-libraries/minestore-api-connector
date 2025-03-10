@@ -45,6 +45,7 @@ export default class Auth extends Context {
     async logout() {
         try {
             this.cookies.remove('mscms_auth_token');
+            this.cookies.remove('mscms_auth_username');
             return true;
         } catch (e) {
             return false;

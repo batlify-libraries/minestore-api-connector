@@ -19,6 +19,7 @@ export default class AuthClassic extends Context {
 
             if (response && typeof response === 'string') {
                 this.cookies.set('mscms_auth_token', response);
+                this.cookies.set('mscms_auth_username', username);
                 return { status: 'success' };
             }
 
