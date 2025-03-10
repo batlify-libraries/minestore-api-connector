@@ -51,4 +51,8 @@ export default class Auth extends Context {
             return false;
         }
     }
+
+    async getUsername() {
+        return this.cookies.get('mscms_auth_username');
+    }
 }
