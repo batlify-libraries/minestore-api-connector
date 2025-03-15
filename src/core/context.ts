@@ -50,4 +50,14 @@ export default class Context {
             throw error.response?.data || new Error('An unknown error occurred');
         }
     }
+
+    public setCookie(key: string, value: string, maxAge = 60 * 60 * 24 * 7) {
+        this.cookies.set(key, value, {
+            path: '/',
+            httpOnly: false,
+            secure: true,
+            sameSite: 'Lax',
+            maxAge: maxAge,
+        });
+    }
 }
