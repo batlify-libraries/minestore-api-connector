@@ -56,7 +56,7 @@ export default class Context {
             path: '/',
             httpOnly: false,
             secure: true,
-            sameSite: 'Lax',
+            sameSite: 'lax',
             maxAge: maxAge,
         });
     }
