@@ -1,6 +1,6 @@
 {
   "name": "@batlify/mscms2-api",
-  "version": "1.0.0-dev2.3",
+  "version": "1.0.0-dev2.4",
   "author": "Sxagon (Michal Lipka)",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

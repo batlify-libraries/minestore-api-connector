@@ -54,8 +54,8 @@ export default class Context {
     public setCookie(key: string, value: string, maxAge = 60 * 60 * 24 * 7) {
         this.cookies.set(key, value, {
             path: '/',
-            httpOnly: false,
-            secure: true,
+            httpOnly: process.env.PETR_HTTP,
+            secure: process.env.PETR_SECURE,
             sameSite: 'lax',
             maxAge: maxAge,
         });
