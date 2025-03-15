@@ -43,6 +43,7 @@ export default class Context {
                 url: `${this.apiUrl}/api${url}`,
                 data: body,
                 headers,
+                withCredentials: true,
             });
             return response.data;
         } catch (error: any) {
