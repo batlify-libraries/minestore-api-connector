@@ -5,25 +5,25 @@
 npm:
 
 ```bash
-npm install @batlify/mscms2-api
+npm i @batlify/mscms-api-nextjs
 ```
 
 yarn:
 
 ```bash
-yarn add @batlify/mscms2-api
+yarn add @batlify/mscms-api-nextjs
 ```
 
 pnpm:
 
 ```bash
-pnpm add @batlify/mscms2-api
+pnpm add @batlify/mscms-api-nextjs
 ```
 
 ## Example of usage
 
 ```js
-import { Auth, User } from '@batlify/mscms2-api';
+import { Auth, User } from '@batlify/mscms-api-nextjs';
 
 class Test {
     protected auth: Auth;
