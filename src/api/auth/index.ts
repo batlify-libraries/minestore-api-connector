@@ -44,15 +44,19 @@ export default class Auth extends Context {
      */
     async logout() {
         try {
-            this.cookies.remove('mscms_auth_token');
-            this.cookies.remove('mscms_auth_username');
+            this.removeCookie('mscms_auth_token');
+            this.removeCookie('mscms_auth_username');
             return true;
         } catch (e) {
             return false;
         }
     }
 
+    /*
+     * Get user's username from cookies
+     */
     async getUsername() {
-        return this.cookies.get('mscms_auth_username');
+
+        return this.getCookie('mscms_auth_username');
     }
 }
