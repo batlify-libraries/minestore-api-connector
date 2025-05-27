@@ -1,54 +1,54 @@
 import Context from '../../../core/context';
 
+/**
+ * Handles products for logged-in users.
+ */
 export default class ProductsAuthorized extends Context {
 
-    /*
-     * Get product by id
-     * @Note Authorization is needed
-     * @param id Product id
-     * @returns response
-     * @throws Error
+    /**
+     * Get a product by its ID.
+     *
+     * @note Authorization is needed.
+     *
+     * @param {string} token - Authorization token.
+     * @param {string} id - Product ID.
+     * @returns {Promise<any>} Product data.
+     * @throws {Error} If the request fails.
      */
-    async get(id: string) {
-        return this.request(true, 'POST', `/items/get/${id}`)
-            .then((response: any) => {
-                return response;
-            })
-            .catch((e: any) => {
-                throw e;
-            });
+    async get(token: string, id: string): Promise<any> {
+        return this.request(true, 'POST', `/items/get/${id}`, {}, token)
+            .then((response: any) => response)
+            .catch((e: any) => { throw e; });
     }
 
-    /*
-     * Get products by category
-     * @Note Authorization is needed
-     * @param path Category path
-     * @returns response
-     * @throws Error
+    /**
+     * Get products from a specific category.
+     *
+     * @note Authorization is needed.
+     *
+     * @param {string} token - Authorization token.
+     * @param {string} path - Category path.
+     * @returns {Promise<any>} List of products in the category.
+     * @throws {Error} If the request fails.
      */
-    async getFromCategory(path: string) {
-        return this.request(true, 'POST', `/categories/get/${path}`)
-            .then((response: any) => {
-                return response;
-            })
-            .catch((e: any) => {
-                throw e;
-            });
+    async getFromCategory(token: string, path: string): Promise<any> {
+        return this.request(true, 'POST', `/categories/get/${path}`, {}, token)
+            .then((response: any) => response)
+            .catch((e: any) => { throw e; });
     }
 
-    /*
-     * Get featured products
-     * @Note Authorization is needed
-     * @returns response
-     * @throws Error
+    /**
+     * Get featured products (deals).
+     *
+     * @note Authorization is needed.
+     *
+     * @param {string} token - Authorization token.
+     * @returns {Promise<any>} List of featured products.
+     * @throws {Error} If the request fails.
      */
-    async getFeatured() {
-        return this.request(true, 'POST', `/items/getFeaturedDeals `)
-            .then((response: any) => {
-                return response;
-            })
-            .catch((e: any) => {
-                throw e;
-            });
+    async getFeatured(token: string): Promise<any> {
+        return this.request(true, 'POST', `/items/getFeaturedDeals`, {}, token)
+            .then((response: any) => response)
+            .catch((e: any) => { throw e; });
     }
 }

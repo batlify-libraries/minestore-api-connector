@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios';
 import dotenv from 'dotenv';
-import Cookies from 'universal-cookie';
 
 dotenv.config();
 
@@ -16,34 +15,48 @@ interface CookieOptions {
     maxAge?: number;
 }
 
+/**
+ * Base Context class for making API requests with optional authorization.
+ * Handles cookies and sets base API URL from environment variables.
+ */
 export default class Context {
-    protected cookies: Cookies;
     private readonly apiUrl: string;
 
-    constructor(cookieHeader?: string) {
-        this.cookies = new Cookies(cookieHeader || undefined);
+    /**
+     * Creates an instance of Context.
+     */
+    constructor() {
         this.apiUrl = process.env.NEXT_PUBLIC_API_URL ?? '';
     }
 
+    /**
+     * Make an HTTP request to the API.
+     *
+     * @param {boolean} authorize - Whether the request requires authorization.
+     * @param {HttpMethod} method - HTTP method to use.
+     * @param {string} url - API endpoint URL (relative to base).
+     * @param {Record<string, unknown>} [body={}] - Request body payload.
+     * @param {string|null} token - Authorization token (if needed).
+     * @returns {Promise<any>} Resolves with response data or rejects with error.
+     * @throws Will throw an error if request fails or authorization token is missing when needed.
+     */
     protected async request(
         authorize: boolean = false,
         method: HttpMethod,
         url: string,
-        body: Record<string, unknown> = {}
+        body: Record<string, unknown> = {},
+        token: string | null
     ): Promise<any> {
         const headers: Record<string, string> = {
             'Content-Type': 'application/json',
         };
 
         if (authorize) {
-            const token = this.getCookie('mscms_auth_token');
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
             } else {
-                return {
-                    code: 401,
-                    message: 'Unauthorized - need to be logged in',
-                };
+                // Instead of returning an error object, consider throwing an error:
+                throw new Error('Unauthorized - need to be logged in');
             }
         }
 
@@ -58,55 +71,8 @@ export default class Context {
 
             return response.data;
         } catch (error: any) {
+            // If API sends error response data, throw it; otherwise, throw generic error.
             throw error.response?.data || new Error('An unknown error occurred');
-        }
-    }
-
-    public setCookie(
-        key: string,
-        value: string,
-        maxAge: number = 60 * 60 * 24 * 7
-    ): void {
-        const options: CookieOptions = {
-            path: '/',
-            httpOnly: process.env.PETR_HTTP === 'true',
-            secure: process.env.PETR_SECURE === 'true',
-            sameSite: 'lax',
-            maxAge,
-        };
-
-        if (isServer) {
-            try {
-                const { cookies } = require('next/headers');
-                const serverCookies = cookies();
-                serverCookies.set({
-                    name: key,
-                    value,
-                    ...options,
-                });
-            } catch {
-                throw new Error('Failed to set cookie on server');
-            }
-        } else {
-            this.cookies.set(key, value, options);
-        }
-    }
-
-    public getCookie(key: string): string | undefined {
-        return this.cookies.get(key);
-    }
-
-    public removeCookie(key: string): void {
-        if (isServer) {
-            try {
-                const { cookies } = require('next/headers');
-                const serverCookies = cookies();
-                serverCookies.delete(key);
-            } catch {
-                throw new Error('Failed to remove cookie on server');
-            }
-        } else {
-            this.cookies.remove(key, { path: '/' });
         }
     }
 }

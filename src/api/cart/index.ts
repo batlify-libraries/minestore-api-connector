@@ -1,6 +1,12 @@
 import Context from '../../core/context';
 import Packages from './packages';
 
+/**
+ * Handles operations related to the shopping cart.
+ *
+ * This includes fetching cart data, manipulating packages,
+ * and checking payment status.
+ */
 export default class Cart extends Context {
 
     private packages: Packages;
@@ -10,112 +16,147 @@ export default class Cart extends Context {
         this.packages = new Packages();
     }
 
-    /*
-     * Get cart's data
-     * @Note Authorization is needed
-     * @param response
-     * @throws Error
+    /**
+     * Get the contents of the cart.
+     *
+     * @note Authorization is required.
+     *
+     * @param {string} token - User's auth token.
+     * @returns {Promise<any>} The cart data from the server.
+     * @throws {Error} If the request fails.
      */
-    async getCart() {
-        return this.request(true, 'POST', '/cart/get')
-            .then((response: any) => {
-                return response;
-            })
-            .catch((e: any) => {
-                throw e;
-            });
+    async getCart(token: string): Promise<any> {
+        return this.request(true, 'POST', '/cart/get', {}, token);
     }
 
-    /*
-     * Check if cart is empty
-     * @Note Authorization is needed
-     * @param response
-     * @throws Error
+    /**
+     * Check if the cart is empty.
+     *
+     * @note Authorization is required.
+     *
+     * @param {string} token - User's auth token.
+     * @returns {Promise<boolean>} True if cart is empty, otherwise false.
+     * @throws {Error} If the request fails.
      */
-    async isCartEmpty() {
-        return this.request(true, 'POST', '/cart/get')
-            .then((response: any) => {
-                return response.items.length === 0;
-
-            })
-            .catch((e: any) => {
-                throw e;
-            });
+    async isCartEmpty(token: string): Promise<boolean> {
+        const response = await this.request(true, 'POST', '/cart/get', {}, token);
+        return response.items.length === 0;
     }
 
-    /*
-     * Add package to cart
-     * @Note Authorization is needed
-     * @param response
-     * @throws Error
+    /**
+     * Add a package to the cart.
+     *
+     * @note Authorization is required.
+     *
+     * @param {string} token - User's auth token.
+     * @param {string} id - Package ID.
+     * @param {boolean} promoted - Whether the package is promoted.
+     * @param {boolean} payment_type - Payment type flag.
+     * @returns {Promise<any>} Server response.
+     * @throws {Error} If the request fails.
      */
-    async addPackage(id: string, promoted: boolean, payment_type: boolean) {
-        return this.packages.add(id, promoted, payment_type);
+    async addPackage(token: string, id: string, promoted: boolean, payment_type: boolean): Promise<any> {
+        return this.packages.add(token, id, promoted, payment_type);
     }
 
-    /*
-     * Remove package from cart
-     * @Note Authorization is needed
-     * @param response
-     * @throws Error
+    /**
+     * Remove a package from the cart.
+     *
+     * @note Authorization is required.
+     *
+     * @param {string} token - User's auth token.
+     * @param {string} id - Package ID.
+     * @returns {Promise<any>} Server response.
+     * @throws {Error} If the request fails.
      */
-    async removePackage(id: string) {
-        return this.packages.remove(id);
+    async removePackage(token: string, id: string): Promise<any> {
+        return this.packages.remove(token, id);
     }
 
-    /*
-     * Update package's quantity in cart
-     * @Note Authorization is needed
-     * @param response
-     * @throws Error
+    /**
+     * Update the quantity of a package in the cart.
+     *
+     * @note Authorization is required.
+     *
+     * @param {string} token - User's auth token.
+     * @param {string} id - Package ID.
+     * @param {number} quantity - New quantity.
+     * @returns {Promise<any>} Server response.
+     * @throws {Error} If the request fails.
      */
-    async quantityPackage(id: string, quantity: number) {
-        return this.packages.quantity(id, quantity);
+    async quantityPackage(token: string, id: string, quantity: number): Promise<any> {
+        return this.packages.quantity(token, id, quantity);
     }
 
-    /*
-     * Update package's price in cart
-     * @Note Authorization is needed
-     * @param response
-     * @throws Error
+    /**
+     * Update the price of a package in the cart.
+     *
+     * @note Authorization is required.
+     *
+     * @param {string} token - User's auth token.
+     * @param {string} id - Package ID.
+     * @param {number} price - New price.
+     * @returns {Promise<any>} Server response.
+     * @throws {Error} If the request fails.
      */
-    async pricePackage(id: string, price: number) {
-        return this.packages.price(id, price);
+    async pricePackage(token: string, id: string, price: number): Promise<any> {
+        return this.packages.price(token, id, price);
     }
 
-    /*
-     * Update package's variable in cart
-     * @Note Authorization is needed
-     * @param response
-     * @throws Error
+    /**
+     * Set a variable for a package in the cart.
+     *
+     * @note Authorization is required.
+     *
+     * @param {string} token - User's auth token.
+     * @param {string} id - Package ID.
+     * @param {number} variable - Variable ID.
+     * @param {string} value - Value to assign.
+     * @returns {Promise<any>} Server response.
+     * @throws {Error} If the request fails.
      */
-    async variablePackage(id: string, variable: number, value: string) {
-        return this.packages.variable(id, variable, value);
+    async variablePackage(token: string, id: string, variable: number, value: string): Promise<any> {
+        return this.packages.variable(token, id, variable, value);
     }
 
-    /*
-     * Update package's variable in cart
-     * @Note Authorization is needed
-     * @param response
-     * @throws Error
+    /**
+     * Select a server for a package in the cart.
+     *
+     * @note Authorization is required.
+     *
+     * @param {string} token - User's auth token.
+     * @param {string} id - Package ID.
+     * @param {number} server - Server ID to assign.
+     * @returns {Promise<any>} Server response.
+     * @throws {Error} If the request fails.
      */
-    async selectServerPackage(id: string, server: number) {
-        return this.packages.selectServer(id, server);
+    async selectServerPackage(token: string, id: string, server: number): Promise<any> {
+        return this.packages.selectServer(token, id, server);
     }
 
-    /*
-     * Get selectable servers
-     * @Note Authorization is needed
-     * @param response
-     * @throws Error
+    /**
+     * Get the list of servers that can be selected in the cart.
+     *
+     * @note Authorization is required.
+     *
+     * @param {string} token - User's auth token.
+     * @returns {Promise<any>} List of selectable servers.
+     * @throws {Error} If the request fails.
      */
-    async getSelectableServers() {
-        return this.request(true, 'POST', '/cart/getSelectServers')
-            .then((response: any) => {
-                return response;
-            })
-            .catch((e: any) => {
-                throw e;
-            });
+    async getSelectableServers(token: string): Promise<any> {
+        return this.request(true, 'POST', '/cart/getSelectServers', {}, token);
+    }
+
+    /**
+     * Check the payment status of an order.
+     *
+     * @note Authorization is not required.
+     *
+     * @param {string} orderId - The ID of the order.
+     * @returns {Promise<any>} Server response indicating payment status.
+     * @throws {Error} If the request fails.
+     */
+    async checkStatus(orderId: string): Promise<any> {
+        return this.request(true, 'POST', '/payments/checkStatus', { order_id: orderId }, null);
     }
 }

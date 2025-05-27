@@ -1,11 +1,11 @@
 {
-  "name": "@batlify/mscms-api-nextjs",
-  "version": "1.0.0-dev2",
+  "name": "@batlify/minestore-api-connector",
+  "version": "1.0.0-dev1",
   "author": "Sxagon (Michal Lipka)",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
-  "description": "MineStoreCMS v3 API package",
+  "description": "MineStoreCMS v3 API connector",
   "keywords": [
     "minestore",
     "cms",
@@ -26,20 +26,16 @@
     "minestorecms"
   ],
   "scripts": {
-    "build": "tsc",
-    "dev": "nodemon src/index.ts"
+    "build": "tsc"
   },
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^22.10.2",
-    "nodemon": "^3.1.9",
-    "ts-node": "^10.9.2",
     "typescript": "^5.7.2"
   },
   "dependencies": {
     "@types/dotenv": "^8.2.3",
-    "axios": "^1.7.9",
-    "dotenv": "^16.4.7",
-    "universal-cookie": "^7.2.2"
+    "axios": "1.8.2",
+    "dotenv": "^16.4.7"
   }
 }

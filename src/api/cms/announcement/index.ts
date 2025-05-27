@@ -1,20 +1,23 @@
 import Context from '../../../core/context';
 
+/**
+ * Handles retrieval of site-wide announcements.
+ *
+ * Publicly available endpoint to fetch current announcement.
+ */
 export default class Announcement extends Context {
 
-    /*
-     * Get announcement
-     * @Note Authorization isn't needed
-     * @returns response
-     * @throws Error
+    /**
+     * Get the current announcement.
+     *
+     * @note Authorization is not required.
+     *
+     * @returns {Promise<any>} The current announcement content.
+     * @throws {Error} If the request fails.
      */
-    async get() {
-        return this.request(false, 'GET', '/announcement/get')
-            .then((response: any) => {
-                return response;
-            })
-            .catch((e: any) => {
-                throw e;
-            });
+    async get(): Promise<any> {
+        return this.request(false, 'GET', '/announcement/get', {}, null)
+            .then((response: any) => response)
+            .catch((e: any) => { throw e; });
     }
 }

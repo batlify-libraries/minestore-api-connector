@@ -1,21 +1,21 @@
 import Context from '../../../core/context';
 
+/**
+ * Handles products for non-logged-in users. */
 export default class ProductsGuest extends Context {
 
-    /*
-     * Get product by id
-     * @Note Authorization isn't needed
-     * @param id Product id
-     * @returns response
-     * @throws Error
+    /**
+     * Get a product by its ID (no authorization required).
+     *
+     * @note Authorization is not needed.
+     *
+     * @param {string} id - Product ID.
+     * @returns {Promise<any>} Product data.
+     * @throws {Error} If the request fails.
      */
-    async get(id: string) {
-        return this.request(false, 'POST', `/items/get/guest/${id}`)
-            .then((response: any) => {
-                return response;
-            })
-            .catch((e: any) => {
-                throw e;
-            });
+    async get(id: string): Promise<any> {
+        return this.request(false, 'POST', `/items/get/guest/${id}`, {}, null)
+            .then((response: any) => response)
+            .catch((e: any) => { throw e; });
     }
 }

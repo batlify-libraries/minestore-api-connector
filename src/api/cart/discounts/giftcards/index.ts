@@ -2,8 +2,8 @@ import Context from '../../../../core/context';
 
 export default class GiftCards extends Context {
 
-    async check(code: string) {
-        return this.request(true, 'POST', '/cart/getGift', {gift: code})
+    async check(token: string, code: string) {
+        return this.request(true, 'POST', '/cart/getGift', {gift: code}, token)
             .then((response: any) => {
                 return response;
             })
@@ -12,8 +12,8 @@ export default class GiftCards extends Context {
             });
     }
 
-    async remove() {
-        return this.request(true, 'POST', '/cart/removeGiftcard')
+    async remove(token: string) {
+        return this.request(true, 'POST', '/cart/removeGiftcard', {}, token)
             .then((response: any) => {
                 return response;
             })

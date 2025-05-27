@@ -2,8 +2,8 @@ import Context from '../../../../core/context';
 
 export default class Coupons extends Context {
 
-    async check() {
-        return this.request(true, 'POST', '/cart/getCoupon')
+    async check(token: string) {
+        return this.request(true, 'POST', '/cart/getCoupon', {}, token)
             .then((response: any) => {
                 return response;
             })
@@ -12,8 +12,8 @@ export default class Coupons extends Context {
             });
     }
 
-    async remove() {
-        return this.request(true, 'POST', '/cart/removeCoupon')
+    async remove(token: string) {
+        return this.request(true, 'POST', '/cart/removeCoupon', {}, token)
             .then((response: any) => {
                 return response;
             })

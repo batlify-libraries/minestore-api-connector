@@ -19,17 +19,17 @@ export default class Discounts extends Context {
      * @param code giftcard/coupon code
      * @throws Error
      */
-    async check(type: 'giftcard' | 'coupon', code?: string) {
+    async check(token: string, type: 'giftcard' | 'coupon', code?: string) {
         if (type === 'giftcard') {
             if (!code) {
                 throw new Error('Code is required');
             }
-            return this.giftCards.check(code);
+            return this.giftCards.check(token, code);
         }
         if (type === 'coupon') {
             // why tf can't I check specific coupon code and coupon must be applied?
             // don't ask me why... it's just how it works ¯\_(ツ)_/¯
-            return this.coupons.check();
+            return this.coupons.check(token);
         }
     }
 
@@ -38,8 +38,8 @@ export default class Discounts extends Context {
      * @param code coupon code
      * @throws Error
      */
-    async apply(code: string) {
-        return this.request(true, 'POST', '/cart/acceptCoupon', {coupon: code})
+    async apply(token: string, code: string) {
+        return this.request(true, 'POST', '/cart/acceptCoupon', {coupon: code}, token)
             .then((response: any) => {
                 return response;
             })
@@ -53,12 +53,12 @@ export default class Discounts extends Context {
       * @param type giftcard | coupon
       * @throws Error
      */
-    async remove(type: 'giftcard' | 'coupon') {
+    async remove(token: string, type: 'giftcard' | 'coupon') {
         if (type === 'giftcard') {
-            return this.giftCards.remove();
+            return this.giftCards.remove(token);
         }
         if (type === 'coupon') {
-            return this.coupons.remove();
+            return this.coupons.remove(token);
         }
     }
 }

@@ -1,4 +1,10 @@
-import Auth from './api/auth';
+/**
+ * Central export point for all API classes and core Context.
+ * Usable for easy imports in client code, e.g.:
+ *
+ * import { User, Cart, AuthClassic } from './api';
+ */
+
 import User from './api/user';
 import Accessibility from './api/accessibility';
 import Discounts from './api/cart/discounts';
@@ -12,11 +18,17 @@ import Pages from './api/cms/pages';
 import Profile from './api/cms/profile';
 import Staff from './api/cms/staff';
 import Settings from './api/cms/settings';
+import Patrons from './api/cms/patrons';
 import Payment from './api/payment';
+import AuthClassic from './api/auth/classic';
+import AuthMinecraft from './api/auth/ingame/minecraft';
+import AuthDiscord from './api/auth/discord';
 import Context from './core/context';
 
 export {
-    Auth,
+    AuthClassic,
+    AuthMinecraft,
+    AuthDiscord,
     User,
     Accessibility,
     Discounts,
@@ -30,6 +42,7 @@ export {
     Profile,
     Staff,
     Settings,
+    Patrons,
     Payment,
     Context,
 };
