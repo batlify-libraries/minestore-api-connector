@@ -18,4 +18,19 @@ export default class ProductsGuest extends Context {
             .then((response: any) => response)
             .catch((e: any) => { throw e; });
     }
+
+    /**
+     * Get featured products (deals).
+     *
+     * @note Authorization is needed.
+     *
+     * @param {string} token - Authorization token.
+     * @returns {Promise<any>} List of featured products.
+     * @throws {Error} If the request fails.
+     */
+    async getFeatured(): Promise<any> {
+        return this.request(true, 'POST', `/items/getFeaturedDeals`, {}, null)
+            .then((response: any) => response)
+            .catch((e: any) => { throw e; });
+    }
 }
