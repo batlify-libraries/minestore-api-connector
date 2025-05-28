@@ -1,6 +1,6 @@
 {
   "name": "@batlify/minestore-api-connector",
-  "version": "1.0.0-dev2",
+  "version": "1.0.0-dev3",
   "author": "Sxagon (Michal Lipka)",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"

@@ -22,14 +22,13 @@ export default class ProductsGuest extends Context {
     /**
      * Get featured products (deals).
      *
-     * @note Authorization is needed.
+     * @note Authorization is not needed.
      *
-     * @param {string} token - Authorization token.
      * @returns {Promise<any>} List of featured products.
      * @throws {Error} If the request fails.
      */
     async getFeatured(): Promise<any> {
-        return this.request(true, 'POST', `/items/getFeaturedDeals`, {}, null)
+        return this.request(false, 'POST', `/items/getFeaturedDeals`, {}, null)
             .then((response: any) => response)
             .catch((e: any) => { throw e; });
     }
