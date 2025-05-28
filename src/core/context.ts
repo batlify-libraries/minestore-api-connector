@@ -75,4 +75,8 @@ export default class Context {
             throw error.response?.data || new Error('An unknown error occurred');
         }
     }
+
+    public async getApiUrl(): Promise<string> {
+        return this.apiUrl;
+    }
 }
